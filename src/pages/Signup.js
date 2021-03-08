@@ -83,17 +83,6 @@ function Signup() {
             var errorMessage = error.message;
         })
 
-        /* firebase.auth().createUserWithEmailAndPassword(formData.email, password)
-            .then((userCredential) => {
-                updateEmployers();
-                // history.replace('/');
-                // Signed in 
-            })
-            .catch((error) => {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-            }); */
-
 
 
         
