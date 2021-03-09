@@ -21,7 +21,7 @@ function Step3({ formData, setForm, navigation, handleRegistration }) {
                 <Typography component="h1" variant="h5">
                     Sign up step 3
                 </Typography>
-                <Suggestions />
+                <Suggestions department={formData.department}/>
                 <div className={classes.buttonContainer}>
                 <Button
                     fullWidth

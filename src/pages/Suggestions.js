@@ -17,7 +17,7 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import { getComparator, stableSort } from '../utils/sort';
 
 
-function Suggestions() {
+function Suggestions({department}) {
     const [rowsPerPage, setRowsPerPage] = React.useState(2);
     const [page, setPage] = React.useState(0);
     const [headData, setheadData] = useState([]);
@@ -64,11 +64,17 @@ function Suggestions() {
             const database = firebase.database();
             const employers = database.ref().child('employers');
             employers.get().then((snapshot) => {
+                console.log(snapshot.val())
                 if (snapshot.exists()) {
                     collectHeadData(snapshot.val()[0]);
                     if(curentUserEmail)
                     {
-                        currentUserDepartment = snapshot.val().find(data => data.email == curentUserEmail).department;
+                        const currentUser = snapshot.val().find(data => data.email == curentUserEmail)
+                        currentUserDepartment = currentUser.department;
+                    }
+                    else
+                    {
+                        currentUserDepartment = department;
                     }
                 
                     dispatch(allActions.employersActions.setEmployers(snapshot.val().filter(data => data.department === currentUserDepartment && data.email !== curentUserEmail)));

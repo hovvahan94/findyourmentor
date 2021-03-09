@@ -18,13 +18,19 @@ function Login() {
     const classes = useStyles();
 
     const loginHandler = () => {
-        
-        firebase.login({
-            email: email,
-            password: password,
-        }).then(() => {
-            history.push("/profile");
-        });
+        if(email.trim() !== '' && password.trim() !== '')
+        {
+            firebase.login({
+                email: email,
+                password: password,
+            }).then(() => {
+                history.push("/profile");
+            });
+        }
+        else
+        {
+            alert('Please insert email and password')
+        }
     }
 
     return (

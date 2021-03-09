@@ -19,7 +19,10 @@ function AuthIsLoaded({ children }) {
 
 function App(props) {
   const isLoadedProfile = useSelector(state => state.firebase.profile.isLoaded);
+  const isEmptyProfile = useSelector(state => state.firebase.profile.isEmpty);
   const auth = useSelector(state => state.firebase.auth)
+
+  console.log(isEmptyProfile)
   return (
     <AuthIsLoaded>
       <Router>
@@ -30,8 +33,8 @@ function App(props) {
           <PrivateRoute path='/profile'>
             <Profile />
           </PrivateRoute>
-          <Route path='/login' component={Login} />
-          <Route path='/signup' component={Signup} />
+          <Route path='/login' component={Login}/>
+          <Route path='/signup' component={Signup}/>
           <Route path='/' component={Home} />
         </Switch>
       </Router>
