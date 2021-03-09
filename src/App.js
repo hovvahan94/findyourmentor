@@ -16,9 +16,7 @@ function AuthIsLoaded({ children }) {
 
 function App() {
   const isEmptyProfile = useSelector(state => state.firebase.profile.isEmpty);
-  const isLoaded = useSelector(state => state.firebase);
 
-  console.log(isEmptyProfile, isLoaded)
   return (
     <AuthIsLoaded>
       <Router>
