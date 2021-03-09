@@ -17,6 +17,8 @@ function Profile() {
     const curentUserEmail = useSelector(state => state.firebase.auth.email);
 
     useEffect(() => {
+
+        
         function fetchProfileInfo() {
             const database = firebase.database();
             const employers = database.ref().child('employers');
@@ -55,6 +57,9 @@ function Profile() {
                 </CardContent>
                 <CardActions>
                     <Button size="small" onClick={() => history.push('/suggestions')}>Suggest a Mentor</Button>
+                </CardActions>
+                <CardActions>
+                    <Button size="small" onClick={() => firebase.logout()}>Logout</Button>
                 </CardActions>
             </Card>
         </Container>}

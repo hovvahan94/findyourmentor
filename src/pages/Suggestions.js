@@ -67,7 +67,7 @@ function Suggestions() {
                 if (snapshot.exists()) {
                     collectHeadData(snapshot.val()[0]);
                     currentUserDepartment = snapshot.val().find(data => data.email == curentUserEmail).department;
-                    dispatch(allActions.employersActions.setEmployers(snapshot.val().filter(data => data.department === currentUserDepartment)));
+                    dispatch(allActions.employersActions.setEmployers(snapshot.val().filter(data => data.department === currentUserDepartment && data.email !== curentUserEmail)));
                 } else {
                     dispatch(allActions.employersActions.setEmployers(null));
                 }

@@ -7,10 +7,11 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import firebase from '../firebase';
+import { useFirebase } from 'react-redux-firebase'
 import { useHistory } from 'react-router-dom';
 
 function Login() {
+    const firebase = useFirebase()
     let history = useHistory();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')

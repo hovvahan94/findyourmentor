@@ -4,7 +4,7 @@ import { isLoaded, isEmpty } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 
 
-const PrivateRoute = ({ children, ...remainingProps }) => {
+const UnauthenticatedRoute = ({ children, ...remainingProps }) => {
     const auth = useSelector(state => state.firebase.auth.isLoaded)
 
     
@@ -12,12 +12,12 @@ const PrivateRoute = ({ children, ...remainingProps }) => {
         <Route
             {...remainingProps}
             render={({ location }) =>
-            isLoaded(auth) && !isEmpty(auth) ? (
+            isLoaded(auth) && isEmpty(auth) ? (
                     children
                 ) : (
                     <Redirect
                         to={{
-                            pathname: "/login",
+                            pathname: "/profile",
                             state: { from: location },
                         }}
                     />
@@ -26,4 +26,4 @@ const PrivateRoute = ({ children, ...remainingProps }) => {
         />
     );
 };
-export default PrivateRoute;
+export default UnauthenticatedRoute;
