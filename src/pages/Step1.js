@@ -15,7 +15,6 @@ import FormControl from '@material-ui/core/FormControl';
 function Step1({ formData, setForm, navigation, setPassword, password }) {
     const classes = useStyles();
 
-    console.log(password)
     return (
         <Container component="main" maxWidth="xs" className="container signup step1">
             <CssBaseline />
