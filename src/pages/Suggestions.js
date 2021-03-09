@@ -66,7 +66,11 @@ function Suggestions() {
             employers.get().then((snapshot) => {
                 if (snapshot.exists()) {
                     collectHeadData(snapshot.val()[0]);
-                    currentUserDepartment = snapshot.val().find(data => data.email == curentUserEmail).department;
+                    if(curentUserEmail)
+                    {
+                        currentUserDepartment = snapshot.val().find(data => data.email == curentUserEmail).department;
+                    }
+                
                     dispatch(allActions.employersActions.setEmployers(snapshot.val().filter(data => data.department === currentUserDepartment && data.email !== curentUserEmail)));
                 } else {
                     dispatch(allActions.employersActions.setEmployers(null));
@@ -116,7 +120,7 @@ function Suggestions() {
                         <TableBody>
                             {employers !== undefined && stableSort(employers, getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
                                 <TableRow key={index}>
-                                    {Object.keys(row).map(data => <TableCell align="left">{row[data]}</TableCell>)}
+                                    {Object.keys(row).map(data => <TableCell key={data} align="left">{row[data]}</TableCell>)}
                                 </TableRow>
                             ))}
                             {emptyRows > 0 && (
