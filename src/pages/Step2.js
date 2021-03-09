@@ -26,6 +26,18 @@ const departments = [
 
 function Step2({ formData, setForm, navigation }) {
     const classes = useStyles();
+
+    const handleNext = () =>
+    {
+        if(formData.department)
+        {
+            navigation.next()
+        }
+        else{
+            alert('Please select department')
+        }
+    }
+
     return (
         <Container component="main" maxWidth="xs" className="container signup step2">
             <CssBaseline />
@@ -111,7 +123,7 @@ function Step2({ formData, setForm, navigation }) {
                             variant="contained"
                             color="primary"
                             className={classes.submit}
-                            onClick={() => navigation.next()}
+                            onClick={handleNext}
                         >
                             Make a match suggestion
                     </Button>
