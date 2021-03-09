@@ -30,8 +30,8 @@ function App(props) {
           <PrivateRoute path='/profile'>
             <Profile />
           </PrivateRoute>
-          {isEmpty(auth) && <Route path='/login' component={Login} />}
-          {isEmpty(auth) && <Route path='/signup' component={Signup} />}
+          <Route path='/login' component={Login} />
+          <Route path='/signup' component={Signup} />
           <Route path='/' component={Home} />
         </Switch>
       </Router>

@@ -18,13 +18,13 @@ function Login() {
     const classes = useStyles();
 
     const loginHandler = () => {
+        
         firebase.login({
             email: email,
             password: password,
         }).then(() => {
             history.push("/profile");
         });
-        // const provider = new firebase.auth.ema(
     }
 
     return (
