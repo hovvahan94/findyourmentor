@@ -66,6 +66,8 @@ function Signup() {
     const handleRegistration = () => {
         validateForm();
 
+        
+
 
         createNewUser({email: formData.email, password: password})
         .then((userCredential) => {
@@ -76,6 +78,7 @@ function Signup() {
         .catch((error) => {
             let errorCode = error.code;
             let errorMessage = error.message;
+            alert(errorMessage)
         })
 
 
