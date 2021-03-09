@@ -20,11 +20,14 @@ function Login() {
     const loginHandler = () => {
         if(email.trim() !== '' && password.trim() !== '')
         {
+            
             firebase.login({
                 email: email,
                 password: password,
             }).then(() => {
-                history.push("/profile");
+                setTimeout(() => {
+                    history.push("/profile");
+                }, 1000)
             });
         }
         else

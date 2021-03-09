@@ -23,7 +23,11 @@ function Profile() {
             const query = employers.orderByChild('email').equalTo(curentUserEmail).limitToFirst(1);
 
             query.on('value', snap => {
-                setProfileInfo(snap.val()[Object.keys(snap.val())[0]])
+                console.log(snap.val())
+                if (snap.val())
+                {
+                    setProfileInfo(snap.val()[Object.keys(snap.val())[0]])
+                }
             })
         }
 

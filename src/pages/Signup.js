@@ -6,7 +6,6 @@ import Step3 from './Step3';
 import { RegionData } from '../RegionData';
 import firebase from '../firebase';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 const defaultData = {
     first_name: '',
@@ -68,10 +67,11 @@ function Signup() {
         validateForm();
 
 
-        createNewUser({email: formData.email,password: password})
+        createNewUser({email: formData.email, password: password})
         .then((userCredential) => {
             updateEmployers();
             history.replace('/profile');
+            
         })
         .catch((error) => {
             let errorCode = error.code;

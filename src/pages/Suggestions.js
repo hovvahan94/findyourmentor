@@ -10,8 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Backdrop } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { useDispatch, useSelector } from 'react-redux';
-import allActions from '../redux/actions';
+import { useSelector } from 'react-redux';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import { getComparator, stableSort } from '../utils/sort';
@@ -27,10 +26,8 @@ function Suggestions({ department }) {
     const [suggestions, setSuggestions] = useState([]);
     let currentUserDepartment = '';
 
-    const employers = useSelector(state => state.employers.employers)
     const curentUserEmail = useSelector(state => state.firebase.auth.email);
 
-    const dispatch = useDispatch();
 
     const collectHeadData = (data) => {
         let result = [];
