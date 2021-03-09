@@ -6,9 +6,8 @@ import Suggestions from './pages/Suggestions';
 import Profile from './pages/Profile';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import PrivateRoute from './components/PrivateRoute';
 import { useSelector } from 'react-redux';
-import { isLoaded, isEmpty } from 'react-redux-firebase'
+import { isLoaded } from 'react-redux-firebase'
 
 function AuthIsLoaded({ children }) {
   const auth = useSelector(state => state.firebase.auth)
@@ -27,12 +26,8 @@ function App(props) {
     <AuthIsLoaded>
       <Router>
         <Switch>
-          <PrivateRoute path='/suggestions'>
-            <Suggestions />
-          </PrivateRoute>
-          <PrivateRoute path='/profile'>
-            <Profile />
-          </PrivateRoute>
+          <Route path='/suggestions' component={Suggestions}/>
+          <Route path='/profile' component={Profile}/>
           <Route path='/login' component={Login}/>
           <Route path='/signup' component={Signup}/>
           <Route path='/' component={Home} />

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import firebase from '../firebase';
-import { lighten,makeStyles } from '@material-ui/core/styles';
+import { lighten, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -17,13 +17,14 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import { getComparator, stableSort } from '../utils/sort';
 
 
-function Suggestions({department}) {
-    const [rowsPerPage, setRowsPerPage] = React.useState(2);
-    const [page, setPage] = React.useState(0);
+function Suggestions({ department }) {
+    const [rowsPerPage, setRowsPerPage] = useState(2);
+    const [page, setPage] = useState(0);
     const [headData, setheadData] = useState([]);
-    const [dense, setDense] = React.useState(false);
-    const [order, setOrder] = React.useState('asc');
-    const [orderBy, setOrderBy] = React.useState('calories');
+    const [dense, setDense] = useState(false);
+    const [order, setOrder] = useState('asc');
+    const [orderBy, setOrderBy] = useState('calories');
+    const [suggestions, setSuggestions] = useState([]);
     let currentUserDepartment = '';
 
     const employers = useSelector(state => state.employers.employers)
@@ -63,8 +64,10 @@ function Suggestions({department}) {
         function fetchEmployers() {
             const database = firebase.database();
             const employers = database.ref().child('employers');
+
+
+
             employers.get().then((snapshot) => {
-                console.log(snapshot.val())
                 if (snapshot.exists()) {
                     collectHeadData(snapshot.val()[0]);
                     if(curentUserEmail)
@@ -76,10 +79,13 @@ function Suggestions({department}) {
                     {
                         currentUserDepartment = department;
                     }
+
+                    
+                    let arr = snapshot.val().slice();
                 
-                    dispatch(allActions.employersActions.setEmployers(snapshot.val().filter(data => data.department === currentUserDepartment && data.email !== curentUserEmail)));
+                    setSuggestions(arr.filter(data => data.department === currentUserDepartment && data.email !== curentUserEmail))
                 } else {
-                    dispatch(allActions.employersActions.setEmployers(null));
+                    setSuggestions(null)
                 }
             }).catch(function (error) {
                 console.error(error);
@@ -91,14 +97,14 @@ function Suggestions({department}) {
 
     const classes = useStyles();
 
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, employers.length - page * rowsPerPage);
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, suggestions.length - page * rowsPerPage);
 
     return (
         <>
-            <Backdrop className={classes.backdrop} open={employers.length === 0}>
+            <Backdrop className={classes.backdrop} open={suggestions.length === 0}>
                 <CircularProgress color="inherit" />
             </Backdrop>
-            {employers !== null ? <Paper className={classes.paper}>
+            {suggestions !== null ? <Paper className={classes.paper}>
                 <TableContainer component={Paper}>
                     <Table className={classes.table} aria-label="simple table" size='medium'>
                         <TableHead>
@@ -124,7 +130,7 @@ function Suggestions({department}) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {employers !== undefined && stableSort(employers, getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
+                            {suggestions !== undefined && stableSort(suggestions, getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
                                 <TableRow key={index}>
                                     {Object.keys(row).map(data => <TableCell key={data} align="left">{row[data]}</TableCell>)}
                                 </TableRow>
@@ -139,7 +145,7 @@ function Suggestions({department}) {
                 </TableContainer>
                 <TablePagination
                     rowsPerPageOptions={[2, 5, 10, 25]}
-                    count={employers.length}
+                    count={suggestions.length}
                     component="div"
                     rowsPerPage={rowsPerPage}
                     page={page}

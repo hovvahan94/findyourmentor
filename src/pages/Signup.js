@@ -34,17 +34,16 @@ function Signup() {
         initialStep: 0
     })
 
-    const employersReducer = useSelector(state => state.employers.employers)
-
     const props = { formData, setForm, navigation, setPassword, password }
 
     const updateEmployers = () => {
         const database = firebase.database();
-        const employers = database.ref().child('employers');
+        database.ref().child('employers').get().then(data => {
+            let employersArr = data.val().slice();
+            employersArr.push(formData)
 
-
-        employersReducer.push(formData);
-        employers.set(employersReducer);
+            database.ref().child('employers').set(employersArr)
+        });
     }
 
     const validateForm = () => {
@@ -68,19 +67,15 @@ function Signup() {
     const handleRegistration = () => {
         validateForm();
 
-        
 
         createNewUser({email: formData.email,password: password})
         .then((userCredential) => {
-            console.log(userCredential)
             updateEmployers();
             history.replace('/profile');
-            // Signed in 
-            // set anel user Credential
         })
         .catch((error) => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
+            let errorCode = error.code;
+            let errorMessage = error.message;
         })
 
 

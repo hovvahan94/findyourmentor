@@ -17,21 +17,24 @@ function Profile() {
     const curentUserEmail = useSelector(state => state.firebase.auth.email);
 
     useEffect(() => {
-
-        
         function fetchProfileInfo() {
             const database = firebase.database();
             const employers = database.ref().child('employers');
             const query = employers.orderByChild('email').equalTo(curentUserEmail).limitToFirst(1);
 
             query.on('value', snap => {
-                console.log(snap.val()[Object.keys(snap.val())[0]])
                 setProfileInfo(snap.val()[Object.keys(snap.val())[0]])
             })
         }
 
         fetchProfileInfo()
     }, [])
+
+    const handleLogout = () =>
+    {
+        firebase.logout();
+        history.push('/')
+    }
 
 
 
@@ -59,7 +62,7 @@ function Profile() {
                     <Button size="small" onClick={() => history.push('/suggestions')}>Suggest a Mentor</Button>
                 </CardActions>
                 <CardActions>
-                    <Button size="small" onClick={() => firebase.logout()}>Logout</Button>
+                    <Button size="small" onClick={handleLogout}>Logout</Button>
                 </CardActions>
             </Card>
         </Container>}
